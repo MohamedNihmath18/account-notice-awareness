@@ -97,37 +97,40 @@ export default async function handler(request) {
       status: "authenticated"
     });
 
-    const html = `<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Security Awareness</title>
-<style>
-body{margin:0;min-height:100vh;background:#f7f7f7;font-family:Arial,Helvetica,sans-serif;
-display:flex;align-items:center;justify-content:center;padding:24px;color:#111}
-.card{max-width:680px;width:100%;background:#fff;border-radius:16px;padding:38px;
-box-shadow:0 12px 40px rgba(0,0,0,.15);text-align:center}
-.icon{font-size:54px}h1{font-size:32px;margin:8px 0 18px}
-p{font-size:17px;line-height:1.6}.small{font-size:13px;color:#666;margin-top:22px}
-</style>
-</head>
-<body>
-<div class="card">
-<div class="icon">⚠️</div>
-<h1>YOU CLICKED IT</h1>
-<p><strong>This was an authorized IT security awareness exercise.</strong></p>
-<p>No password was collected.<br>No account was compromised.</p>
-<p><strong>Think before clicking links in unexpected emails.</strong></p>
-<p class="small">Cybersecurity Awareness • IT Department</p>
-</div>
-</body>
-</html>`;
+//     const html = `<!doctype html>
+// <html lang="en">
+// <head>
+// <meta charset="utf-8">
+// <meta name="viewport" content="width=device-width,initial-scale=1">
+// <title>Security Awareness</title>
+// <style>
+// body{margin:0;min-height:100vh;background:#f7f7f7;font-family:Arial,Helvetica,sans-serif;
+// display:flex;align-items:center;justify-content:center;padding:24px;color:#111}
+// .card{max-width:680px;width:100%;background:#fff;border-radius:16px;padding:38px;
+// box-shadow:0 12px 40px rgba(0,0,0,.15);text-align:center}
+// .icon{font-size:54px}h1{font-size:32px;margin:8px 0 18px}
+// p{font-size:17px;line-height:1.6}.small{font-size:13px;color:#666;margin-top:22px}
+// </style>
+// </head>
+// <body>
+// <div class="card">
+// <div class="icon">⚠️</div>
+// <h1>YOU CLICKED IT</h1>
+// <p><strong>This was an authorized IT security awareness exercise.</strong></p>
+// <p>No password was collected.<br>No account was compromised.</p>
+// <p><strong>Think before clicking links in unexpected emails.</strong></p>
+// <p class="small">Cybersecurity Awareness • IT Department</p>
+// </div>
+// </body>
+// </html>`;
 
-    return new Response(html, {
-      status: 200,
-      headers: { "Content-Type": "text/html; charset=UTF-8" }
-    });
+    return new Response(null, {
+  status: 302,
+  headers: {
+    "Location": "https://account-notice.netlify.app/?authenticated=1",
+    "Cache-Control": "no-store"
+  }
+});
   } catch (err) {
     console.error("AUTH CALLBACK ERROR:", err);
     return new Response(
