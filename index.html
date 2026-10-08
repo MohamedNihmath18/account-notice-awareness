@@ -3,9 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+
   <title>Account Security Notice</title>
 
   <style>
+
     * {
       box-sizing: border-box;
     }
@@ -24,9 +26,9 @@
       overflow: hidden;
     }
 
-    /* =========================
-       BLACK TERMINAL SCREEN
-       ========================= */
+    /* =====================================================
+       TERMINAL SCREEN
+       ===================================================== */
 
     #hackingScreen {
       position: fixed;
@@ -76,78 +78,311 @@
     }
 
 
-    /* =========================
-       MATRIX AWARENESS SCREEN
-       ========================= */
+    /* =====================================================
+       FINAL SECURITY SCREEN
+       ===================================================== */
 
     #awarenessScreen {
       display: none;
       position: fixed;
       inset: 0;
+
       background: #000;
-      color: #39ff88;
+
+      color: #fff;
+
       align-items: center;
       justify-content: center;
-      padding: 24px;
+
+      padding: 0;
+
       font-family: Arial, Helvetica, sans-serif;
+
       overflow: hidden;
     }
 
+
+    /* Matrix background */
+
     #matrixCanvas {
       position: absolute;
+
       inset: 0;
+
       width: 100%;
       height: 100%;
+
       z-index: 0;
     }
 
-    .card {
-      position: relative;
+
+    /* Hacker image */
+
+    .hacker-image {
+      position: absolute;
+
+      inset: 0;
+
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+
+      z-index: 1;
+
+      opacity: 0;
+
+      animation:
+        hackerAppear 1.2s ease forwards;
+    }
+
+
+    /* Dark overlay */
+
+    .hacker-overlay {
+      position: absolute;
+
+      inset: 0;
+
       z-index: 2;
 
-      max-width: 680px;
-      width: 100%;
+      background:
+        radial-gradient(
+          circle at center,
+          rgba(0, 0, 0, 0.05),
+          rgba(0, 0, 0, 0.78)
+        );
+    }
 
-      background: rgba(0, 0, 0, .88);
 
-      border: 1px solid #39ff88;
-      border-radius: 12px;
+    /* =====================================================
+       HACKED MESSAGE
+       ===================================================== */
 
-      padding: 38px;
+    .hacked-alert {
+      position: relative;
 
-      box-shadow:
-        0 0 20px rgba(57, 255, 136, .35),
-        0 0 60px rgba(57, 255, 136, .15);
+      z-index: 3;
 
       text-align: center;
+
+      width: 90%;
+
+      max-width: 1000px;
+
+      opacity: 0;
+
+      animation:
+        alertAppear 1s ease .8s forwards;
     }
 
-    .icon {
-      font-size: 54px;
-      margin-bottom: 8px;
-    }
 
-    h1 {
-      margin: 6px 0 18px;
-      font-size: 32px;
+    .hacked-title {
+      font-size:
+        clamp(48px, 9vw, 110px);
 
-      color: #ff4d4d;
+      font-weight: 900;
+
+      color: #ff2222;
+
+      letter-spacing: 5px;
+
+      margin: 0;
 
       text-shadow:
-        0 0 12px rgba(255, 77, 77, .7);
+        0 0 8px #ff0000,
+        0 0 25px rgba(255, 0, 0, .8),
+        0 0 60px rgba(255, 0, 0, .5);
+
+      animation:
+        glitch 1.5s infinite;
     }
 
-    p {
-      font-size: 17px;
-      line-height: 1.6;
-      margin: 10px 0;
+
+    .hacked-subtitle {
+      margin-top: 18px;
+
+      font-family: Consolas, Monaco, monospace;
+
+      font-size:
+        clamp(16px, 2vw, 25px);
+
       color: #fff;
+
+      text-shadow:
+        0 0 10px #000;
     }
 
-    .small {
-      font-size: 13px;
+
+    .critical {
+      display: inline-block;
+
+      margin-top: 25px;
+
+      padding: 10px 24px;
+
+      border:
+        2px solid #ff2222;
+
+      color: #ff4444;
+
+      background:
+        rgba(0, 0, 0, .75);
+
+      font-family:
+        Consolas, Monaco, monospace;
+
+      font-weight: bold;
+
+      letter-spacing: 3px;
+
+      animation:
+        pulse 1s infinite;
+    }
+
+
+    /* =====================================================
+       AWARENESS REVEAL
+       ===================================================== */
+
+    .awareness-reveal {
+      display: none;
+
+      position: relative;
+
+      z-index: 5;
+
+      max-width: 700px;
+
+      width: 90%;
+
+      padding: 35px;
+
+      text-align: center;
+
+      background:
+        rgba(0, 0, 0, .94);
+
+      border:
+        2px solid #39ff88;
+
+      border-radius: 12px;
+
+      box-shadow:
+        0 0 30px rgba(57, 255, 136, .5),
+        0 0 80px rgba(57, 255, 136, .2);
+    }
+
+
+    .awareness-reveal h2 {
       color: #39ff88;
-      margin-top: 22px;
+
+      font-size: 34px;
+
+      margin-top: 0;
+    }
+
+
+    .awareness-reveal p {
+      color: #fff;
+
+      font-size: 17px;
+
+      line-height: 1.6;
+    }
+
+
+    .green-text {
+      color: #39ff88;
+
+      font-weight: bold;
+    }
+
+
+    /* =====================================================
+       ANIMATIONS
+       ===================================================== */
+
+    @keyframes hackerAppear {
+
+      from {
+        opacity: 0;
+
+        transform:
+          scale(1.05);
+      }
+
+      to {
+        opacity: 1;
+
+        transform:
+          scale(1);
+      }
+
+    }
+
+
+    @keyframes alertAppear {
+
+      from {
+        opacity: 0;
+
+        transform:
+          scale(.8);
+      }
+
+      to {
+        opacity: 1;
+
+        transform:
+          scale(1);
+      }
+
+    }
+
+
+    @keyframes glitch {
+
+      0%,
+      90%,
+      100% {
+        transform:
+          translate(0);
+      }
+
+      92% {
+        transform:
+          translate(-4px, 2px);
+      }
+
+      94% {
+        transform:
+          translate(4px, -2px);
+      }
+
+      96% {
+        transform:
+          translate(-2px, 1px);
+      }
+
+    }
+
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        box-shadow:
+          0 0 5px
+          rgba(255, 34, 34, .3);
+      }
+
+      50% {
+        box-shadow:
+          0 0 25px
+          rgba(255, 34, 34, .8);
+      }
+
     }
 
   </style>
@@ -157,136 +392,223 @@
 <body>
 
 
-  <!-- =========================
-       BLACK TERMINAL
-       ========================= -->
+  <!-- =====================================================
+       TERMINAL SCREEN
+       ===================================================== -->
 
   <section id="hackingScreen">
 
     <div id="terminal"></div>
 
     <div class="bar">
-      <div id="fill" class="fill"></div>
+
+      <div
+        id="fill"
+        class="fill">
+      </div>
+
     </div>
 
   </section>
 
 
 
-  <!-- =========================
-       MATRIX AWARENESS SCREEN
-       ========================= -->
+  <!-- =====================================================
+       FINAL SCREEN
+       ===================================================== -->
 
   <section id="awarenessScreen">
 
-    <canvas id="matrixCanvas"></canvas>
 
-    <div class="card">
+    <!-- Matrix background -->
 
-      <div class="icon">⚠️</div>
+    <canvas
+      id="matrixCanvas">
+    </canvas>
 
-      <h1>YOU CLICKED IT</h1>
 
-      <p>
-        <strong>
-          This was an authorized IT security awareness exercise.
-        </strong>
-      </p>
+    <!-- Generated hacker image -->
 
-      <p>
-        No password was collected.<br>
-        No account was compromised.
-      </p>
+    <img
+      src="/hacker-alert.png"
+      class="hacker-image"
+      alt="Security alert"
+    >
 
-      <p>
-        <strong>
-          Think before clicking links in unexpected emails.
-        </strong>
-      </p>
 
-      <p class="small">
-        Cybersecurity Awareness • IT Department
-      </p>
+    <!-- Dark overlay -->
+
+    <div
+      class="hacker-overlay">
+    </div>
+
+
+
+    <!-- =================================================
+         INITIAL HACKED MESSAGE
+         ================================================= -->
+
+    <div
+      class="hacked-alert"
+      id="hackedAlert">
+
+
+      <h1 class="hacked-title">
+
+        SYSTEM HACKED
+
+      </h1>
+
+
+      <div class="hacked-subtitle">
+
+        UNAUTHORIZED ACCESS DETECTED
+
+      </div>
+
+
+      <div class="critical">
+
+        ⚠ CRITICAL SECURITY ALERT ⚠
+
+      </div>
+
 
     </div>
+
+
+
+    <!-- =================================================
+         AWARENESS REVEAL
+         ================================================= -->
+
+    <div
+      class="awareness-reveal"
+      id="awarenessReveal">
+
+
+      <h2>
+
+        ⚠ SECURITY AWARENESS TEST
+
+      </h2>
+
+
+      <p>
+
+        You clicked a simulated
+        phishing link.
+
+      </p>
+
+
+      <p>
+
+        This exercise demonstrates
+        how convincing a malicious
+        link can appear.
+
+      </p>
+
+
+      <p class="green-text">
+
+        No password was collected.<br>
+
+        No MFA code was collected.<br>
+
+        No files were accessed.
+
+      </p>
+
+
+    </div>
+
 
   </section>
 
 
 
+  <!-- =====================================================
+       JAVASCRIPT
+       ===================================================== -->
+
   <script>
 
-    /*
-      ==========================================
-      AUTHENTICATION-FIRST FLOW
-      ==========================================
 
-      User clicks the link
-              ↓
-      Microsoft login
-              ↓
-      Authentication callback
-              ↓
-      Email recorded
-              ↓
-      Redirect back with authenticated=1
-              ↓
-      Simulation starts
-    */
-
+    /* =====================================================
+       AUTHENTICATION CHECK
+       ===================================================== */
 
     const params =
-      new URLSearchParams(window.location.search);
+      new URLSearchParams(
+        window.location.search
+      );
+
 
     const authenticated =
       params.get("authenticated");
 
 
     /*
-      If authentication has NOT happened,
-      immediately send the user to Microsoft login.
+      If the user has not completed
+      Microsoft authentication,
+      send them to the login function.
     */
 
     if (authenticated !== "1") {
+
 
       window.location.replace(
         "/.netlify/functions/login"
       );
 
+
     }
+
 
     else {
 
-      /*
-        ==========================================
-        AUTHENTICATED
-        START SIMULATION
-        ==========================================
-      */
+
+      /* =================================================
+         ELEMENTS
+         ================================================= */
 
       const hackingScreen =
-        document.getElementById("hackingScreen");
+        document.getElementById(
+          "hackingScreen"
+        );
+
 
       const awarenessScreen =
-        document.getElementById("awarenessScreen");
+        document.getElementById(
+          "awarenessScreen"
+        );
+
 
       const terminal =
-        document.getElementById("terminal");
+        document.getElementById(
+          "terminal"
+        );
+
 
       const fill =
-        document.getElementById("fill");
+        document.getElementById(
+          "fill"
+        );
 
 
-      /*
-        Show black terminal.
-      */
+      /* =================================================
+         SHOW TERMINAL
+         ================================================= */
 
-      hackingScreen.style.display = "flex";
+      hackingScreen.style.display =
+        "flex";
 
 
-      /*
-        Terminal messages.
-      */
+      /* =================================================
+         TERMINAL MESSAGES
+         ================================================= */
 
       const lines = [
 
@@ -338,52 +660,61 @@
       let progress = 0;
 
 
-      /*
-        Add terminal lines one by one.
-      */
+      /* =================================================
+         ADD TERMINAL LINE
+         ================================================= */
 
       function addLine() {
 
+
         if (i >= lines.length) {
 
-          /*
-            Terminal finished.
-
-            Wait briefly, then show
-            the Matrix awareness screen.
-          */
 
           setTimeout(() => {
+
 
             hackingScreen.style.display =
               "none";
 
+
             awarenessScreen.style.display =
               "flex";
 
+
             startMatrix();
+
 
           }, 800);
 
+
           return;
+
         }
 
 
-        const [text, cls] =
-          lines[i++];
+        const [
+          text,
+          cls
+        ] = lines[i++];
 
 
         const div =
-          document.createElement("div");
+          document.createElement(
+            "div"
+          );
+
 
         div.className =
           cls;
+
 
         div.textContent =
           text;
 
 
-        terminal.appendChild(div);
+        terminal.appendChild(
+          div
+        );
 
 
         terminal.scrollTop =
@@ -412,41 +743,49 @@
       addLine();
 
 
-      /*
-        ==========================================
-        MATRIX EFFECT
-        ==========================================
-      */
+
+      /* =================================================
+         MATRIX EFFECT
+         ================================================= */
 
       function startMatrix() {
+
 
         const canvas =
           document.getElementById(
             "matrixCanvas"
           );
 
+
         const ctx =
-          canvas.getContext("2d");
+          canvas.getContext(
+            "2d"
+          );
 
 
         function resize() {
 
+
           canvas.width =
             window.innerWidth;
+
 
           canvas.height =
             window.innerHeight;
 
+
+          columns =
+            Math.floor(
+              window.innerWidth /
+              fontSize
+            );
+
+
+          drops =
+            Array(columns)
+              .fill(1);
+
         }
-
-
-        resize();
-
-
-        window.addEventListener(
-          "resize",
-          resize
-        );
 
 
         const characters =
@@ -465,14 +804,21 @@
 
 
         let drops =
-          Array(columns).fill(1);
+          Array(columns)
+            .fill(1);
+
+
+        resize();
+
+
+        window.addEventListener(
+          "resize",
+          resize
+        );
 
 
         function draw() {
 
-          /*
-            Slowly fade previous characters.
-          */
 
           ctx.fillStyle =
             "rgba(0, 0, 0, 0.08)";
@@ -485,10 +831,6 @@
             canvas.height
           );
 
-
-          /*
-            Matrix character color.
-          */
 
           ctx.fillStyle =
             "#39ff88";
@@ -505,6 +847,7 @@
             i++
           ) {
 
+
             const character =
               characters[
                 Math.floor(
@@ -516,20 +859,20 @@
 
             ctx.fillText(
               character,
+
               i * fontSize,
-              drops[i] * fontSize
+
+              drops[i] *
+              fontSize
             );
 
 
-            /*
-              Restart drops when they
-              reach the bottom.
-            */
-
             if (
-              drops[i] * fontSize >
-                canvas.height &&
-              Math.random() > 0.975
+              drops[i] *
+              fontSize >
+              canvas.height &&
+              Math.random() >
+              0.975
             ) {
 
               drops[i] = 0;
@@ -544,18 +887,64 @@
         }
 
 
-        /*
-          Run Matrix animation.
-        */
-
         setInterval(
           draw,
           35
         );
 
+
+        /* =================================================
+           HACKED SCREEN → AWARENESS REVEAL
+
+           Keep the dramatic screen visible
+           for 7 seconds.
+           ================================================= */
+
+        setTimeout(() => {
+
+
+          const hackedAlert =
+            document.getElementById(
+              "hackedAlert"
+            );
+
+
+          const awarenessReveal =
+            document.getElementById(
+              "awarenessReveal"
+            );
+
+
+          hackedAlert.style.transition =
+            "opacity 0.8s ease";
+
+
+          hackedAlert.style.opacity =
+            "0";
+
+
+          setTimeout(() => {
+
+
+            hackedAlert.style.display =
+              "none";
+
+
+            awarenessReveal.style.display =
+              "block";
+
+
+          }, 800);
+
+
+        }, 7000);
+
+
       }
 
+
     }
+
 
   </script>
 
